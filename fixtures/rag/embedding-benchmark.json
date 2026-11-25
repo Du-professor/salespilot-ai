@@ -1,0 +1,42 @@
+{
+  "notes": "合成评测用例。top5 以不同 chunk_id 去重。期望文件和出处必须在同一条命中中。回归对照和换模型使用相同原件、相同问法。",
+  "sets": [
+    {
+      "name": "工业相机",
+      "files": ["rag/demo-vision-manual.pdf"],
+      "expected_file": "demo-vision-manual.pdf",
+      "expected_page": 2,
+      "queries": [
+        "需要 GigE 工业相机，至少 8 MP，标称分辨率下至少 100 fps。",
+        "请选一台 GigE 相机，分辨率不低于 10 MP，全分辨率帧率至少 100 fps。",
+        "找一款 GigE 工业相机，12 MP，标称分辨率下至少 100 fps。",
+        "GigE 工业相机要至少 8 MP、100 fps，镜头接口用 C-mount。",
+        "需要 GigE 工业相机，至少 12 MP、100 fps，核对产品手册对应页。",
+        "Need a GigE industrial camera with at least 8 MP and 100 fps at native resolution.",
+        "需要 GigE 相机，用于视觉检测，至少 8 MP、100 fps。我要核对原始速度指标。",
+        "帮我筛 GigE 相机，至少 8 MP、100 fps，低分辨率高速型号不合适。",
+        "请给至少 8 MP、100 fps 的 GigE 相机，优先提供 120 fps 的依据。",
+        "GigE 相机，最低 8 MP、100 fps，请附手册和选型报告。"
+      ]
+    },
+    {
+      "name": "工业计算机",
+      "files": ["specs/sp-ipc-620.md", "specs/sp-ipc-670.md", "specs/sp-ipc-680.md", "specs/rtx-a2000-12gb.md"],
+      "expected_file": "sp-ipc-670.md",
+      "query_prefix": "需要一台工控机，至少 6 个有外部供电的 GigE 相机直连接口，每路 300 Mbps，同时独立 Modbus TCP 连 PLC。安装 RTX A2000 12GB，GPU 电气 x16，GPU 供电余量至少 15 W，并预留一个电气 x4 插槽，带卡 0 至 45 °C。",
+      "queries": [
+        {"text": "先核对六路连接和 PLC 网络。", "expected_section": "1.1"},
+        {"text": "哪里写了独立给 PLC 的 Modbus TCP 网口？", "expected_section": "1.1"},
+        {"text": "相机的入口总带宽和每个端口的速率是多少？", "expected_section": "1.1"},
+        {"text": "请确认这块显卡装上网卡后仍有电气 x16。", "expected_section": "1.2"},
+        {"text": "核对 RTX A2000 12GB 的装配兼容性及 GPU 通道。", "expected_section": "1.2"},
+        {"text": "请查手册中分配给 GPU 的可用供电额度。", "expected_section": "1.3"},
+        {"text": "How much power does the manual allocate to the GPU?", "expected_section": "1.3"},
+        {"text": "查清安装网卡和显卡后剩余的扩展插槽。", "expected_section": "1.4"},
+        {"text": "带卡最低和最高工作温度的依据在哪个段落？", "expected_section": "1.4"},
+        {"text": "核对剩余槽的物理和电气规格。", "expected_section": "1.4"}
+      ]
+    }
+  ],
+  "separate_regressions": ["no_match", "invalid_citations", "version_split"]
+}

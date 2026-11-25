@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "salespilot-ai-backend"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi==0.126.0",
+    "pydantic==2.12.5",
+    "uvicorn==0.37.0",
+    "langgraph==1.2.24",
+    "defusedxml==0.7.1",
+    "openpyxl==3.1.5",
+    "httpx==0.28.1",
+    "cryptography>=46,<50",
+]
+
+[project.optional-dependencies]
+documents = ["docling>=2.80,<3"]
+rag = [
+    "langchain-openai>=1.0,<2",
+    "langchain-text-splitters>=1.0,<2",
+]
+local = [
+    "transformers>=4.40,<6",
+    "torch>=2.2",
+    "huggingface_hub>=0.23",
+]
+enterprise = [
+    "psycopg[binary]>=3.2,<4",
+    "redis>=5.0,<6",
+]
+dev = [
+    "pytest==8.4.2",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

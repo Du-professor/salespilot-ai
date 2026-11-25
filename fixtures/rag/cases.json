@@ -1,0 +1,86 @@
+{
+  "vision": {
+    "files": [
+      "rag/demo-vision-manual.pdf"
+    ],
+    "text": "需要一款 GigE 相机，分辨率至少 8 MP，标称分辨率下至少 100 fps。确认匹配后请附手册和选型报告。",
+    "expected_models": [
+      "SP-VC-120"
+    ],
+    "excluded_models": [
+      "SP-VC-110"
+    ],
+    "citation": {
+      "page": 2
+    },
+    "archives": true
+  },
+  "ipc": {
+    "files": [
+      "specs/sp-ipc-620.md",
+      "specs/sp-ipc-670.md",
+      "specs/sp-ipc-680.md",
+      "specs/rtx-a2000-12gb.md"
+    ],
+    "text": "需要一台工控机，至少 6 个有外部供电的 GigE 相机直连接口，每路 300 Mbps，同时独立 Modbus TCP 连 PLC。安装 RTX A2000 12GB，GPU 电气 x16，GPU 供电余量至少 15 W，并预留一个电气 x4 插槽，带卡 0 至 45 °C。给出推荐和依据。",
+    "expected_models": [
+      "SP-IPC-670"
+    ],
+    "excluded_models": [
+      "SP-IPC-620",
+      "SP-IPC-680"
+    ]
+  },
+  "followup": {
+    "messages": [
+      "需要一款 12 MP 的工业相机，请帮我确认还需要哪些条件。",
+      "GigE 接口，至少 100 fps。"
+    ],
+    "expected_followup_models": [
+      "SP-VC-120"
+    ]
+  },
+  "no_match": {
+    "text": "需要 GigE、至少 8 MP、标称分辨率下至少 1000 fps 的相机。",
+    "expected_status": "insufficient_evidence",
+    "archives": false
+  },
+  "invalid_citations": {
+    "wrong_page": 1,
+    "wrong_version": "not-published",
+    "wrong_value": "9999 fps",
+    "expected": "reject_or_mark_unverified"
+  },
+  "ax920": {
+    "file": "rag/ax-920.md",
+    "text": "需要至少 8 MP、至少 100 fps 的 GigE 相机。",
+    "expected_models": [
+      "AX-920"
+    ]
+  },
+  "robot": {
+    "files": [
+      "rag/arm-600.md",
+      "rag/arm-300.md"
+    ],
+    "text": "需要一台额定负载至少 8 kg、工作半径至少 1200 mm 的工业机器人。",
+    "expected_models": [
+      "ARM-600-STD"
+    ],
+    "excluded_models": [
+      "ARM-300-STD"
+    ]
+  },
+  "poe": {
+    "text": "需要 GigE、至少 8 MP、至少 100 fps 的相机，必须支持 PoE 供电，请附报告。",
+    "expected_status_without_evidence": "insufficient_evidence"
+  },
+  "version_split": {
+    "files": [
+      "rag/ax-920-v1.md",
+      "rag/ax-920-v2.md"
+    ],
+    "text": "需要 GigE、至少 8 MP、至少 100 fps 的 AX-920 相机。",
+    "expected_status": "insufficient_evidence"
+  }
+}

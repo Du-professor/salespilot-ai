@@ -1,0 +1,12 @@
+.git
+.venv
+node_modules
+.salespilot
+release
+dist
+__pycache__
+*.pyc
+.pytest_cache
+.env
+*.zip
+*.log

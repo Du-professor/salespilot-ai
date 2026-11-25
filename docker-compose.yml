@@ -1,0 +1,43 @@
+name: salespilot-ai
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 6G
+    environment:
+      SALESPILOT_PROFILE: demo
+      SALESPILOT_RAG_MODE: ${SALESPILOT_RAG_MODE:-demo}
+      SALESPILOT_RAG_STORE_BACKEND: sqlite
+      SALESPILOT_DB_PATH: /srv/salespilot/.salespilot/workspace.sqlite3
+      SALESPILOT_RAG_INDEX_PATH: /srv/salespilot/.salespilot/workspace-rag.sqlite3
+      SALESPILOT_OBJECT_STORE_BACKEND: local
+      SALESPILOT_OBJECT_STORE_DIR: /srv/salespilot/.salespilot/objects
+      SALESPILOT_DEMO_PASSWORD_A: ${SALESPILOT_DEMO_PASSWORD_A:?set SALESPILOT_DEMO_PASSWORD_A in .env}
+      SALESPILOT_DEMO_PASSWORD_B: ${SALESPILOT_DEMO_PASSWORD_B:?set SALESPILOT_DEMO_PASSWORD_B in .env}
+      SALESPILOT_MODEL_CONFIG_KEY: ${SALESPILOT_MODEL_CONFIG_KEY:?set SALESPILOT_MODEL_CONFIG_KEY in .env}
+      SALESPILOT_MODEL_ALLOWED_BASE_URLS: ${SALESPILOT_MODEL_ALLOWED_BASE_URLS:-}
+      SALESPILOT_WEB_ORIGINS: ${SALESPILOT_WEB_ORIGINS:-http://127.0.0.1:4173,http://localhost:4173}
+      SALESPILOT_SECURE_COOKIE: ${SALESPILOT_SECURE_COOKIE:-false}
+    volumes:
+      - salespilot_data:/srv/salespilot/.salespilot
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${WEB_BIND_HOST:-0.0.0.0}:${WEB_PORT:-4173}:80"
+
+volumes:
+  salespilot_data:
